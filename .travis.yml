@@ -1,0 +1,31 @@
+
+sudo: required
+
+language: python
+
+services:
+  - docker
+
+env:
+  global:
+    - PORTS="389:389"
+    - DOCKER_REPO="laslabs/alpine-samba-dc"
+    - DOCKER_USER="laslabsbot"
+    - secure: "jOKXC9GqSHs+0Q+uAWIJlSJohO5L+KzlwPkDU9EPEgIV1siOLtzkX/418pj200ciPcUBnrxvF+tFg37Kzn+JeeSUg5nIAXwFV9YkgkSAnXJAjKhQV2+5DSohz3NWSEcPDFRcArYaTGcscxrDTm/CdUL9csO4CP6jXB7WVqiIQAybu865VmJnOiFJ7N/fnyhVaJuW3ChD4WEIHRA++Z5Dr21x+Fkfk0qBlu2vYMe8VnhjQzDMV4GD8J7otqpVxJbJ2+4yk682kkGeoWgwIQWuzJ+wvs2LpX+gxQRYGpsRdatVfU6w/HZkJZic0n9bVV9EWOiZdfizDlvBtXUjW9ywaKnHCqMUWBTiSLj+UC5WFdqCPJdRuqN80CLu+QQ9eTomjPigEjgV61bSaPDyT1zV/vv9avMv/TXkZPEHy4a+qMWSbk3HLwkBg0OET52SPNvS2yfbOUGi62TwCK21Nx89hzW82CoXMHqMIA5tgc72EI8Y4ucRNJwEsHJ4F/2391Y3qC5FwjpWGNIIFQqEh33CRsw4E2HZXg1VUBLfCjH1cf8EAxLEjCjS4AztZu8YLEOzyA/KvlqYgx9sEG9qIuV8oiiIaZpGvygIiJ+sjgaOvGDd/CTnNj38uS2ptfx+/ZMR6A9vR64GfTuc4yWgKXOAkbrMa0w7Nzu4vp3fBXN7kEY="
+    - DOCKER_TAG="latest"
+
+  matrix:
+    - TESTS="1"
+    - LINT_CHECK="1"
+    - HUB="1"
+
+install:
+  - git clone --depth=1 https://github.com/LasLabs/docker-quality-tools.git ${HOME}/docker-quality-tools
+  - export PATH=${HOME}/docker-quality-tools/travis:${PATH}
+  - travis_install_all
+
+script:
+  - travis_run_all
+
+after_success:
+  - travis_after_success_all

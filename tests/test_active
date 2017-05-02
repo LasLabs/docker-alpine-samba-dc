@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+# Copyright 2016 LasLabs Inc.
+# License Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html).
+
+set -e
+
+sleep 5
+
+if nc -z localhost 389; then
+  echo "LDAP is active on $DOCKER_CONTAINER_ID"
+  exit 0
+else
+  echo "Test failed"
+  exit 1
+fi
