@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/LasLabs/docker-alpine-samba-dc.svg?branch=master)](https://travis-ci.org/LasLabs/docker-alpine-samba-dc)
 
 [![](https://images.microbadger.com/badges/image/laslabs/alpine-samba-dc.svg)](https://microbadger.com/images/laslabs/alpine-samba-dc "Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/laslabs/alpine-samba-dc.svg)](https://microbadger.com/images/laslabs/alpine-samba-dc"Get your own version badge on microbadger.com")
+[![](https://images.microbadger.com/badges/version/laslabs/alpine-samba-dc.svg)](https://microbadger.com/images/laslabs/alpine-samba-dc "Get your own version badge on microbadger.com")
 
 Docker - Alpine Samba Domain Controller
 =======================================
