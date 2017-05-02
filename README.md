@@ -19,20 +19,20 @@ Usage
 
 *
 
+Volumes
+=======
+
+The following volumes are exposed:
+
+
+| Name | Value | Description |
+|------|-------|-------------|
+Samba | /samba | Rehomed Samba Config, data and log directory |
+
 Build Arguments
 ===============
 
-The following build arguments are available for customization:
-
-
-| Name | Default | Description |
-|------|---------|-------------|
-
-
-Environment Variables
-=====================
-
-The following environment variables are available for your configuration
+The following build arguments are available for your configuration
 pleasure:
 
 | Name | Default | Description |

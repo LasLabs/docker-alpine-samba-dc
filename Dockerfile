@@ -2,31 +2,46 @@ FROM alpine:latest
 MAINTAINER LasLabs Inc <support@laslabs.com>
 
 
-ENV SAMBA_DC_ETC=/etc/samba
-ENV SAMBA_DC_DATA=/var/lib/samba
-ENV SAMBA_DC_LOGS=/var/log/samba
-ENV SAMBA_DC_REALM='corp.example.net'
-ENV SAMBA_DC_DOMAIN='EXAMPLE'
-ENV SAMBA_DC_ADMIN_PASSWD='5u3r53cur3!'
-ENV SAMBA_DC_DNS_BACKEND=SAMBA_INTERNAL
+ARG SAMBA_DC_REALM='corp.example.net'
+ARG SAMBA_DC_DOMAIN='EXAMPLE'
+ARG SAMBA_DC_ADMIN_PASSWD='5u3r53cur3!'
+ARG SAMBA_DC_DNS_BACKEND=SAMBA_INTERNAL
 
 # Install
 RUN apk add --no-cache samba-dc supervisor \
     # Remove default config data, if any
-    && rm -f /etc/samba/smb.conf \
-    && rm -rf /var/lib/samba/* \
+    && rm -rf /etc/samba/smb.conf \
+    && rm -rf /var/lib/samba \
+    && rm -rf /var/log/samba \
+    && mkdir -p /samba/etc /samba/lib /samba/log \
+    && ln -s /samba/etc /etc/samba \
+    && ln -s /samba/lib /var/lib/samba \
+    && ln -s /samba/log /var/log/samba \
     # Configure
-    && samba-tool domain provision --domain=$SAMBA_DC_DOMAIN \
-    --adminpass=$SAMBA_DC_ADMIN_PASSWD \
-    --server-role=dc \
-    --realm=$SAMBA_DC_REALM \
-    --dns-backend=$SAMBA_DC_DNS_BACKEND
+    && samba-tool domain provision --domain="${SAMBA_DC_DOMAIN}" \
+        --adminpass="${SAMBA_DC_ADMIN_PASSWD}" \
+        --server-role=dc \
+        --realm="${SAMBA_DC_REALM}" \
+        --dns-backend="${SAMBA_DC_DNS_BACKEND}"
 
 # Expose ports
-EXPOSE 37/udp 53 88 135/tcp 137/udp 138/udp 139 389 445 464 636/tcp 1024-5000/tcp 3268/tcp 3269/tcp
+EXPOSE 37/udp \
+       53 \
+       88 \
+       135/tcp \
+       137/udp \
+       138/udp \
+       139 \
+       389 \
+       445 \
+       464 \
+       636/tcp \
+       1024-5000/tcp \
+       3268/tcp \
+       3269/tcp
 
 # Persist the configuration, data and log directories
-VOLUME ["$SAMBA_DC_ETC", "$SAMBA_DC_DATA", "$SAMBA_DC_LOGS"]
+VOLUME ["/samba"]
 
 # Copy & set entrypoint for manual access
 COPY ./docker-entrypoint.sh /
