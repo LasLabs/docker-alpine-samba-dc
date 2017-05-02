@@ -1,0 +1,26 @@
+
+sudo: required
+
+language: python
+
+services:
+  - docker
+
+env:
+  global:
+    - PORTS="389:389"
+
+  matrix:
+    - TESTS="1"
+    - LINT_CHECK="1"
+
+install:
+  - git clone --depth=1 https://github.com/LasLabs/docker-quality-tools.git ${HOME}/docker-quality-tools
+  - export PATH=${HOME}/docker-quality-tools/travis:${PATH}
+  - travis_install_all
+
+script:
+  - travis_run_all
+
+after_success:
+  - travis_after_success_all
