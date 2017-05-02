@@ -12,12 +12,30 @@ This image provides a Samba 4 Domain Controller using an Alpine Linux base.
 Configuration
 =============
 
-*
+After building the image, you should start it with the correct environment 
+variables for initial configuration:
+
+* Note that we're persisting the samba volume to a local directory named 
+`samba` in your working dir
+
+```
+mkdir ${PWD}/samba
+
+docker run --rm -i -t \
+    -e SAMBA_DC_REALM='corp.example.net' \
+    -e SAMBA_DC_DOMAIN='EXAMPLE' \
+    -e SAMBA_DC_ADMIN_PASSWD='5u3r53cur3!' \ 
+    -e SAMBA_DC_DNS_BACKEND='SAMBA_INTERNAL' \
+    -v ${PWD}/samba:/samba \
+     'samba-dc:1.0'
+```
 
 Usage
 =====
-
-*
+After it's configured, you can run the container like so:
+```
+docker run --rm -i -t -v ${PWD}/samba:/samba 'samba-dc:1.0'
+```
 
 Volumes
 =======
@@ -29,10 +47,10 @@ The following volumes are exposed:
 |------|-------|-------------|
 Samba | /samba | Rehomed Samba Config, data and log directory |
 
-Build Arguments
-===============
+Environment Variables 
+=====================
 
-The following build arguments are available for your configuration
+The following environment variables are available for your configuration
 pleasure:
 
 | Name | Default | Description |
