@@ -11,30 +11,34 @@ This image provides a Samba 4 Domain Controller using an Alpine Linux base.
 
 Configuration
 =============
+First, Pull the image:
+```
+docker pull laslabs/alpine-samba-dc:latest
+```
 
-After building the image, you should start it with the correct environment 
-variables for initial configuration:
+Now, start the image with the correct environmentvariables for initial
+configuration:
 
-* Note that we're persisting the samba volume to a local directory named 
+* Note that we're persisting the samba volume to a local directory named
 `samba` in your working dir
 
 ```
 mkdir ${PWD}/samba
 
-docker run --rm -i -t \
+docker run -d --restart unless-stopped \
     -e SAMBA_DC_REALM='corp.example.net' \
     -e SAMBA_DC_DOMAIN='EXAMPLE' \
-    -e SAMBA_DC_ADMIN_PASSWD='5u3r53cur3!' \ 
+    -e SAMBA_DC_ADMIN_PASSWD='5u3r53cur3!' \
     -e SAMBA_DC_DNS_BACKEND='SAMBA_INTERNAL' \
     -v ${PWD}/samba:/samba \
-     'samba-dc:1.0'
+     'laslabs/alpine-samba-dc:latest'
 ```
 
 Usage
 =====
-After it's configured, you can run the container like so:
+After the container has been run for the first time, invoke it with the following command
 ```
-docker run --rm -i -t -v ${PWD}/samba:/samba 'samba-dc:1.0'
+docker run -d --restart unless-stopped -v ${PWD}/samba:/samba 'laslabs/alpine-samba-dc:latest'
 ```
 
 Volumes
@@ -47,7 +51,7 @@ The following volumes are exposed:
 |------|-------|-------------|
 Samba | /samba | Rehomed Samba Config, data and log directory |
 
-Environment Variables 
+Environment Variables
 =====================
 
 The following environment variables are available for your configuration
