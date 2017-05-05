@@ -1,28 +1,15 @@
 FROM alpine:latest
 MAINTAINER LasLabs Inc <support@laslabs.com>
 
-
-ARG SAMBA_DC_REALM='corp.example.net'
-ARG SAMBA_DC_DOMAIN='EXAMPLE'
-ARG SAMBA_DC_ADMIN_PASSWD='5u3r53cur3!'
-ARG SAMBA_DC_DNS_BACKEND=SAMBA_INTERNAL
-
 # Install
 RUN apk add --no-cache samba-dc supervisor \
     # Remove default config data, if any
     && rm -rf /etc/samba/smb.conf \
     && rm -rf /var/lib/samba \
     && rm -rf /var/log/samba \
-    && mkdir -p /samba/etc /samba/lib /samba/log \
     && ln -s /samba/etc /etc/samba \
     && ln -s /samba/lib /var/lib/samba \
-    && ln -s /samba/log /var/log/samba \
-    # Configure
-    && samba-tool domain provision --domain="${SAMBA_DC_DOMAIN}" \
-        --adminpass="${SAMBA_DC_ADMIN_PASSWD}" \
-        --server-role=dc \
-        --realm="${SAMBA_DC_REALM}" \
-        --dns-backend="${SAMBA_DC_DNS_BACKEND}"
+    && ln -s /samba/log /var/log/samba
 
 # Expose ports
 EXPOSE 37/udp \

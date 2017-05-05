@@ -8,6 +8,7 @@ services:
 
 env:
   global:
+    - FILE_ENV=".env"
     - PORTS="389:389"
 
   matrix:
