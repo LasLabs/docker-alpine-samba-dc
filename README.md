@@ -16,7 +16,7 @@ First, Pull the image:
 docker pull laslabs/alpine-samba-dc:latest
 ```
 
-Now, start the image with the correct environmentvariables for initial
+Now, start the image with the correct environment variables for initial
 configuration:
 
 * Note that we're persisting the samba volume to a local directory named
