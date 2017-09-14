@@ -12,8 +12,9 @@ This image provides a Samba 4 Domain Controller using an Alpine Linux base.
 Configuration
 =============
 First, Pull the image:
-```
-docker pull laslabs/alpine-samba-dc:latest
+
+```bash
+docker pull laslabs/alpine-samba-dc:0.1.0
 ```
 
 Now, start the image with the correct environment variables for initial
@@ -22,7 +23,7 @@ configuration:
 * Note that we're persisting the samba volume to a local directory named
 `samba` in your working dir
 
-```
+```bash
 mkdir ${PWD}/samba
 
 docker run -d --restart unless-stopped \
@@ -31,14 +32,15 @@ docker run -d --restart unless-stopped \
     -e SAMBA_DC_ADMIN_PASSWD='5u3r53cur3!' \
     -e SAMBA_DC_DNS_BACKEND='SAMBA_INTERNAL' \
     -v ${PWD}/samba:/samba \
-     'laslabs/alpine-samba-dc:latest'
+     'laslabs/alpine-samba-dc:0.1.0'
 ```
 
 Usage
 =====
 After the container has been run for the first time, invoke it with the following command
-```
-docker run -d --restart unless-stopped -v ${PWD}/samba:/samba 'laslabs/alpine-samba-dc:latest'
+
+```bash
+docker run -d --restart unless-stopped -v ${PWD}/samba:/samba 'laslabs/alpine-samba-dc:0.1.0'
 ```
 
 Volumes
@@ -49,7 +51,7 @@ The following volumes are exposed:
 
 | Name | Value | Description |
 |------|-------|-------------|
-Samba | /samba | Rehomed Samba Config, data and log directory |
+| Samba | /samba | Re-homed Samba Config, data and log directory |
 
 Environment Variables
 =====================
@@ -63,9 +65,6 @@ pleasure:
 | SAMBA_DC_DOMAIN | EXAMPLE | The NetBIOS Domain Name
 | SAMBA_DC_ADMIN_PASSWD | 5u3r53cur3! | The AD DC `Administrator` user password
 | SAMBA_DC_DNS_BACKEND | SAMBA_INTERNAL | The DNS backend to use
-
-Known Issues / Roadmap
-======================
 
 Bug Tracker
 ===========
@@ -81,6 +80,7 @@ Contributors
 ------------
 
 * Ted Salmon <tsalmon@laslabs.com>
+* Dave Lasley <dave@laslabs.com>
 
 Maintainer
 ----------
