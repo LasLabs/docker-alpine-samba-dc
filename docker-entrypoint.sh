@@ -23,6 +23,9 @@ if [ ! -f /samba/etc/smb.conf ]; then
     echo "${SAMBA_DC_DOMAIN} - Domain Provisioned Successfully"
 fi
 
+# Run ntp server
+/usr/bin/chronyd -x -d &
+
 if [ "$1" = 'samba' ]; then
     exec /usr/sbin/samba -i
 fi
