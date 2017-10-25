@@ -11,10 +11,18 @@ RUN apk add --no-cache samba-dc supervisor \
     && ln -s /samba/lib /var/lib/samba \
     && ln -s /samba/log /var/log/samba
 
+
+# Add 'edge' repos
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
+
+RUN apk add --no-cache chrony
+
 # Expose ports
 EXPOSE 37/udp \
        53 \
        88 \
+       123/udp \
        135/tcp \
        137/udp \
        138/udp \
