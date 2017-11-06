@@ -1,9 +1,9 @@
-FROM alpine:latest
+FROM alpine:3.6
 MAINTAINER LasLabs Inc <support@laslabs.com>
 
 # Install
 RUN apk add --no-cache samba-dc supervisor \
-    # Remove default config data, if any
+    && echo "Remove default config data, if any" \
     && rm -rf /etc/samba/smb.conf \
     && rm -rf /var/lib/samba \
     && rm -rf /var/log/samba \
