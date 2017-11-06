@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.6
 MAINTAINER LasLabs Inc <support@laslabs.com>
 
 # Install
